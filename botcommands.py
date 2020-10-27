@@ -762,12 +762,12 @@ class commands(commands.Cog):
                 )
         await message.edit(embed=eventembed)
 
-        def check (reaction, user):
+        def check (self, reaction, user):
             return str(reaction.emoji) == '🥳' and user != self.bot.user
         
         while True:
             try:
-                reaction, user = await self.bot.wait_for('reaction_add', timeout=2000000, check=check)
+                self, reaction, user = await self.bot.wait_for('reaction_add', timeout=2000000, check=check)
                 msg = await ctx.fetch_message(message.id)
                 
                 global reactors
