@@ -806,4 +806,3 @@ class commands(commands.Cog):
 def setup(bot):
     bot.add_cog(commands(bot))
     print("Commands Extension loaded successfully")
-    await self.bot.send("Commands extension loaded successfully.")
