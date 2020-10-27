@@ -387,7 +387,7 @@ class commands(commands.Cog):
         vchannels = len(server.voice_channels)
         tchannels = len(server.text_channels)
         totmems = len(ctx.message.guild.members) # includes bots
-        tothums = len([m for m in ctx.message.guild.members if not m.self.bot]) # excludes bots
+        tothums = len([m for m in ctx.message.guild.members if not m.bot]) # excludes bots
         serverembed = discord.Embed(
             title= f"Server info for {server}.",
             color=2123412
