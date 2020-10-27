@@ -792,7 +792,7 @@ class commands(commands.Cog):
         await ctx.send("Success! Event has been deleted.")
         
     @commands.command()
-    @has_permissions()
+    @has_permissions(manage_guild=True)
     async def eventforce(self, ctx, messid):
         user = random.choice(reactors)
         message = await ctx.fetch_message(id=messid)
