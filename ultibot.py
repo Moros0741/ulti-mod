@@ -3,7 +3,7 @@ import os
 import discord
 from discord.ext import commands
 
-startup_extensions = ["botcommands"]
+startup_extensions = ["botcommands", "warningsysext"]
 
 TOKEN = open('token.txt', 'r').read()
 bot = commands.Bot(command_prefix='?')
