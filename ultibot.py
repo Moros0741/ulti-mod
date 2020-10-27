@@ -5,8 +5,8 @@ from discord.ext import commands
 
 startup_extensions = ["botcommands"]
 
-TOKEN = open('codetoken.txt', 'r').read()
-bot = commands.Bot(command_prefix='!')
+TOKEN = open('token.txt', 'r').read()
+bot = commands.Bot(command_prefix='?')
 bot.remove_command('help')
 
 @bot.event
