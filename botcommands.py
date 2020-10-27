@@ -767,7 +767,7 @@ class commands(commands.Cog):
         
         while True:
             try:
-                self, reaction, user = await self.bot.wait_for('reaction_add', timeout=2000000, check=check)
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=2000000, check=check)
                 msg = await ctx.fetch_message(message.id)
                 
                 global reactors
