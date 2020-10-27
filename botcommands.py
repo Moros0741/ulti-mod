@@ -795,7 +795,7 @@ class commands(commands.Cog):
         
     @commands.command()
     @has_permissions(manage_guild=True)
-    async def eventforce(ctx, messid):
+    async def eventforce(self, ctx, messid):
         user = random.choice(reactors)
         message = await ctx.fetch_message(id=messid)
         await ctx.send(f"The winner is: {user}. Congratulations!!")
