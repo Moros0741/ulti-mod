@@ -18,7 +18,8 @@ async def on_connect():
 async def on_ready():
     print(f'Logged in as: {bot.user.name}')
     print(f'With ID: {bot.user.id}')
-
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.streaming, name="Type: ?help for commands list."))
+    
 @bot.command()
 async def load(ctx, extension_name : str):
     """Loads an extension."""
