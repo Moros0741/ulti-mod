@@ -598,7 +598,7 @@ class commands(commands.Cog):
     # Unmute command
     @commands.command()
     @has_permissions(manage_guild=True)
-    async def unmute(ctx, member: discord.Member):
+    async def unmute(self, ctx, member: discord.Member):
         role = role = discord.utils.get(ctx.guild.roles, name='Muted')
         await member.remove_roles(role)
         await ctx.send(f"{member.mention} has been unmuted by {ctx.author.mention}")
@@ -606,7 +606,7 @@ class commands(commands.Cog):
     # Kick Command
     @commands.command()
     @has_permissions(kick_members=True)
-    async def kick(ctx, user: discord.Member, *, reason="No reason provided."):
+    async def kick(self, ctx, user: discord.Member, *, reason="No reason provided."):
             server = ctx.guild
             kickem = discord.Embed(
                 title=":boot: User has been kicked! :boot:",
@@ -638,7 +638,7 @@ class commands(commands.Cog):
     # Invite Kick Command
     @commands.command()
     @has_permissions(manage_guild=True)
-    async def invkick(ctx, user: discord.Member, *, reason="No reason given."):
+    async def invkick(self, ctx, user: discord.Member, *, reason="No reason given."):
         channel = ctx.channel
         server = ctx.guild
         code = await channel.create_invite()
@@ -671,7 +671,7 @@ class commands(commands.Cog):
     # Ban Command
     @commands.command()
     @has_permissions(manage_guild=True)
-    async def ban(ctx, user: discord.Member, *, reason="No reason provided"):
+    async def ban(self, ctx, user: discord.Member, *, reason="No reason provided"):
             server = ctx.guild
             banem = discord.Embed(
                 title=":hammer: User has been banned! :hammer:",
@@ -703,8 +703,8 @@ class commands(commands.Cog):
     # Unban Command
     @commands.command()
     @has_permissions(administrator=True)
-    async def unban(ctx, id: int):
-        user = await bot.fetch_user(id)
+    async def unban(self, ctx, id: int):
+        user = await self.bot.fetch_user(id)
         unbanem = discord.Embed(
             title= ":white_check_mark: User has been unbanned!",
             color=2067276
@@ -730,7 +730,7 @@ class commands(commands.Cog):
 
     # Event creation command
     @commands.command()
-    async def eventcreate(ctx, arg1, arg2):
+    async def eventcreate(self, ctx, arg1, arg2):
         global eventembed
         eventembed = discord.Embed(
             title= ":partying_face: GIVEAWAY!!! :partying_face:",
@@ -763,11 +763,11 @@ class commands(commands.Cog):
         await message.edit(embed=eventembed)
 
         def check (reaction, user):
-            return str(reaction.emoji) == '🥳' and user != bot.user
+            return str(reaction.emoji) == '🥳' and user != self.bot.user
         
         while True:
             try:
-                reaction, user = await bot.wait_for('reaction_add', timeout=2000000, check=check)
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=2000000, check=check)
                 msg = await ctx.fetch_message(message.id)
                 
                 global reactors
@@ -775,7 +775,7 @@ class commands(commands.Cog):
                 for reaction in msg.reactions:
                     if reaction.emoji == '🥳':
                         async for user in reaction.users():
-                            if user != bot.user:
+                            if user != self.bot.user:
                                 reactors.append(f'{user}')
                                 eventembed.set_field_at(2, name="Entered:", value="```{}```".format('\n'.join(reactors)))
                                 await message.edit(embed=eventembed)
@@ -786,14 +786,14 @@ class commands(commands.Cog):
 
     @commands.command()
     @has_permissions(manage_messages=True)
-    async def eventdel(ctx, messid):
+    async def eventdel(self, ctx, messid):
         message = await ctx.fetch_message(id=messid)
         await message.delete()
         await ctx.send("Success! Event has been deleted.")
         
     @commands.command()
     @has_permissions()
-    async def eventforce(ctx, messid):
+    async def eventforce(self, ctx, messid):
         user = random.choice(reactors)
         message = await ctx.fetch_message(id=messid)
         await ctx.send(f"The winner is: {user}. Congratulations!!")
