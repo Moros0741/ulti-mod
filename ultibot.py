@@ -6,9 +6,9 @@ from discord.ext import commands
 startup_extensions = ["botcommands", "warningsysext"]
 
 TOKEN = open('token.txt', 'r').read()
-intent = discord.Intents.all()
+intents = discord.Intents.all()
 
-bot = commands.Bot(command_prefix='?', intent=intent)
+bot = commands.Bot(command_prefix='?', intents=intents)
 bot.remove_command('help')
 
 @bot.event
