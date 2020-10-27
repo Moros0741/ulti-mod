@@ -3,6 +3,8 @@ import discord
 from discord.ext import commands 
 from discord.ext.commands import has_permissions, MissingPermissions
 import asyncio
+import random
+from random import choice
 
 class commands(commands.Cog):
     def __init__(self, bot):
@@ -804,3 +806,4 @@ class commands(commands.Cog):
 def setup(bot):
     bot.add_cog(commands(bot))
     print("Commands Extension loaded successfully")
+    await self.bot.send("Commands extension loaded successfully.")
