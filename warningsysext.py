@@ -8,7 +8,7 @@ class warningsext(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @warningsext.command()
+    @commands.command()
     @has_permissions(manage_guild=True)
     async def warn(self, ctx, user: discord.Member, reason="No reason provided"):
         if reason != None and user != self.bot:
@@ -43,7 +43,7 @@ class warningsext(commands.Cog):
         elif user == self.bot:
             await ctx.send("Hey! Don't bite the hand that feeds you.")
         
-    @warningsext.command()
+    @wcommands.command()
     @has_permissions(manage_guild=True)
     async def warnings(self, ctx, user: discord.Member):
         warningsembed = discord.Embed(
