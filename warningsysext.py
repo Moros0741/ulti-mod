@@ -37,10 +37,10 @@ class warningsext(commands.Cog):
             await ctx.send(embed=warnembed) #will be changed to channel.send when modlog is set. 
             await ctx.send(f":ok_hand: {user} has been warned.")
         
-        elif user != discord.Member:
+        elif reason != None and user != discord.Member:
             await ctx.send("__**ERROR:**__ Can't find that user. Please double check and try again. Usage: `?warn @user <reason>`")
         
-        elif user == self.bot:
+        elif reason != None and user == self.bot:
             await ctx.send("Hey! Don't bite the hand that feeds you.")
         
     @commands.command()
