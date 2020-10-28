@@ -56,6 +56,6 @@ class warningsext(commands.Cog):
         )
         await ctx.send(embed=warningsembed)
 
-    def setup(bot):
-        bot.add_cog(warningsext(bot))
-        print("Warnings Extension has been loaded.")
+def setup(bot):
+    bot.add_cog(warningsext(bot))
+    print("Warnings Extension has been loaded.")
