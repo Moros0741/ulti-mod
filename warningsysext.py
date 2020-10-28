@@ -11,7 +11,7 @@ class warningsext(commands.Cog):
     @warningsext.command()
     @has_permissions(manage_guild=True)
     async def warn(self, ctx, user: discord.Member, reason="No reason provided"):
-        if reason = reason and user != self.bot:
+        if reason != None and user != self.bot:
             warnembed = discord.Embed(
                 title="A User has been warned!",
                 color=15844367
