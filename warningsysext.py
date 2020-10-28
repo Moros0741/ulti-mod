@@ -43,7 +43,7 @@ class warningsext(commands.Cog):
         elif user == self.bot:
             await ctx.send("Hey! Don't bite the hand that feeds you.")
         
-    @wcommands.command()
+    @commands.command()
     @has_permissions(manage_guild=True)
     async def warnings(self, ctx, user: discord.Member):
         warningsembed = discord.Embed(
