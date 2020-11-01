@@ -5,6 +5,7 @@ from discord.ext.commands import has_permissions, MissingPermissions
 import asyncio
 import random
 from random import choice
+import platform
 
 class commands(commands.Cog):
     def __init__(self, bot):
