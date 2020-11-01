@@ -6,6 +6,7 @@ import asyncio
 import random
 from random import choice
 import platform
+import datetime
 
 class commands(commands.Cog):
     def __init__(self, bot):
@@ -326,7 +327,12 @@ class commands(commands.Cog):
             inline=False
         )
         botinembed.set_thumbnail(
-            url='https://i.imgur.com/L6ipEgf.png'
+            url=self.bot.user.avatar_url
+        )
+        botinembed.timestamp = datetime.datetime.utcnow()
+        botinembed.set_footer(
+            text="UltiMod Server Protection",
+            icon_url=self.bot.user.avatar_url
         )
         await message.send(embed=botinembed)
 
