@@ -7,7 +7,7 @@ import sqlite3
 from itertools import cycle
 
 intents = discord.Intents.all()
-startup_extensions = ["Cogs.commandext", "Cogs.welcome"]
+startup_extensions = ["commandext", "welcome"]
 default_prefix = '?'
 
 def set_prefix(bot, message):
