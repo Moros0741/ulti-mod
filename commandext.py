@@ -340,7 +340,7 @@ class UltiMod(commands.Cog):
         )
         botinembed.add_field(
             name= "Bot Version:",
-            value= "1.0.0",
+            value= "1.0.1",
             inline=False
         )
         botinembed.add_field(
