@@ -1355,10 +1355,10 @@ class UltiMod(commands.Cog):
         db = sqlite3.connect('ultidb.sqlite')
         cursor = db.cursor()
         cursor.execute("SELECT muteroles FROM muterole WHERE guild_id = ?", (ctx.guild.id,))
-        results = cursor.fetchone()
+        results1 = cursor.fetchone()
         cursor.close()
         db.close()
-        if results is None:
+        if results1 is None:
             db = sqlite3.connect('ultidb.sqlite')
             cursor = db.cursor()
             cursor.execute("INSERT INTO muterole(guild_id, muteroles) VALUES(?,?)", (ctx.guild.id, rolename,))
@@ -1366,7 +1366,7 @@ class UltiMod(commands.Cog):
             cursor.close()
             db.close()
             await ctx.send(f":ok_hand: Muterole has been set to: `{rolename}`")
-        elif results is not None:
+        elif results1 is not None:
             db = sqlite3.connect('ultidb.sqlite')
             cursor = db.cursor()
             cursor.execute("UPDATE muterole SET muteroles = ? WHERE guild_id = ?", (rolename, ctx.guild.id,))
