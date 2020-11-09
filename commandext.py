@@ -1354,8 +1354,8 @@ class UltiMod(commands.Cog):
     async def muterole(self, ctx, *, rolename):
         db = sqlite3.connect('ultidb.sqlite')
         cursor = db.cursor()
-        cursor.execute("SELECT guild_id, muteroles FROM muterole WHERE guild_id = ?", (ctx.guild.id,))
-        results = cursor.fetchall()
+        cursor.execute("SELECT muteroles FROM muterole WHERE guild_id = ?", (ctx.guild.id,))
+        results = cursor.fetchone()
         cursor.close()
         db.close()
         if results is None:
