@@ -273,7 +273,7 @@ class UltiMod(commands.Cog):
     @commands.command()
     async def hello(self, ctx):
         helloembed = discord.Embed(
-            description= f"Yes {ctx.author.mention}, Can I help you with something?",
+            description= f"Yes {ctx.author.mention}, Can I help you with something? bum",
             color=15844367
         )
         helloembed.set_image(
