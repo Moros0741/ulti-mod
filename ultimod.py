@@ -25,7 +25,7 @@ def set_prefix(bot, message):
         db.commit()
 
 TOKEN = open('token.txt', 'r').read()
-bot = commands.Bot(command_prefix=set_prefix, intents=intents)
+bot = commands.Bot(command_prefix=set_prefix, intents=intents, chunk_guilds_at_startup = False)
 status = cycle(["Server Protection System", "?help for commands", "?support | Join support", "?bug | Report a Bug"])
 bot.remove_command('help')
 
