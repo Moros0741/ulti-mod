@@ -16,256 +16,256 @@ class UltiMod(commands.Cog):
         self.bot = bot
 
     # Help menu
-    @commands.command()
-    async def help(self, ctx):
-        curpage = 1
-        totpage = 6
-        
-        db = sqlite3.connect('ultidb.sqlite')
-        cursor = db.cursor()
-        cursor.execute("SELECT prefix FROM guild_config WHERE guild_id = ?", (ctx.guild.id,))
-        results = cursor.fetchone()
-        prefix = str(results[0][0])
-
-        hlpembed = discord.Embed(
-            title= "UltiMod Help & Information.",
-            description= "List of all command uses, and setup information. ",
-            color=2123412
-        )
-        hlpembed.add_field(
-            name= "How to use:",
-            value= """React with the corresponding emoji to jump straight to the page you would like.
-            
-            ❌ - Close Help Menu
-            __**Pages:**__
-            🛠️ - Utility Commands Menu.
-            🛡️ - Moderation Commands Menu.
-            🎁 - Giveaway Commands Menu.
-            📁 - Logs Configuration Commands.
-            📨 - Future features and information.""",
-            inline=False
-        )
-        utilembed = discord.Embed(
-            title= "Utility Commands.",
-            description= "current utility commands and their usages.",
-            color=15844367
-        )
-        utilembed.add_field(
-            name= f"{prefix}echo <#channel> <message>",
-            value= "*Echo's the message as if from the bot.*. **Note:** *Channel is required. if you wish to post in the same channel just mention that channel.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name= f"{prefix}hello",
-            value= "*Similar to 'ping' command on other bots. Bot responds with a unique message.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name= f"{prefix}botinfo",
-            value= "*Displays Nerd infor for the bot. Current build, Code Language, shards and whether premium is active.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name= f"{prefix}channelid",
-            value="*Fetches the ID for the server channel mentioned.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name=f"{prefix}whois",
-            value="*Fetches information about the specified user. Currently supports only @mentions.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name=f"{prefix}avatar @user",
-            value="*Fetches the avatar of the mentioned user and relays in an embed.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name=f"{prefix}channelstats or ?cs",
-            value="*Fetches cool information about the channel. Such as, permissions, slowmode time, creation date, etc.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name=f"{prefix}roleadd @user <rolename>",
-            value="*Adds the specified role to the mentioned user.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name=f"{prefix}roleremove @user <rolename>",
-            value="*Removes the specified role from the mentioned user.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name=f"{prefix}support",
-            value="*Gives you a link to join UltiMod's support server*",
-            inline=False
-        )
-        utilembed.add_field(
-            name=f"{prefix}inviteme",
-            value="*Displays the authorization link to invite UltiMod to your server.*",
-            inline=False
-        )
-        utilembed.add_field(
-            name=f"{prefix}bug <message>",
-            value="*Sends a bug report to the support server where developers can either contact you to help you work around a bug or get right into fixing it for you.*"
-        )
-        modembed = discord.Embed(
-            title= "Moderation Commands",
-            description= "Moderation commands an their uses.",
-            color=15158332
-        )
-        modembed.add_field(
-            name="Warning system coming soon",
-            value="*The warning system will be released shortly, It takes an extensive amount of coding to do what we would like it to do. When released you can expect to see a users warnings, actions taken against them, number of times they have been warned by a specific moderator, all server warnings, as well as see which moderators are sending out the most warnings. *",
-            inline=False
-        )
-        modembed.add_field(
-            name=f"{prefix}mute @user <reason>",
-            value="*Mutes the mentioned user and provides a reason.*",
-            inline=False
-        )
-        modembed.add_field(
-            name=f"{prefix}unmute @user [Opt: <reason>]",
-            value= "*Unmutes the mentioned user, and provides the optional reason.*",
-            inline=False
-        )
-        modembed.add_field(
-            name=f"{prefix}kick @user <reason>",
-            value="*Kicks the mentioned user and provides a reason*",
-            inline=False
-        )
-        modembed.add_field(
-            name=f"{prefix}invkick @user_ID",
-            value="*Invites the kicked user.*",
-            inline=False
-        )
-        modembed.add_field(
-            name=f"{prefix}ban @user <reason>",
-            value="*Bans the mentioned user and provides a reason.*",
-            inline=False
-            )
-
-        modembed.add_field(
-            name=f"{prefix}unban <user_ID>",
-            value="*Unbans the user mentioned.*",
-            inline=False
-        )
-        givembed = discord.Embed(
-            title= "Giveaway Commands",
-            description="Giveaway commands and their uses.",
-            color=10181046
-        )
-        givembed.add_field(
-            name=f"{prefix}eventcreate <'event_name'> <'event prize'>",
-            value="*Creates an event using the name and prize stated. Creates embed and add reaction for contestants to enter.*",
-            inline=False
-        )
-        givembed.add_field(
-            name=f"{prefix}eventdel <event_ID>",
-            value="*Deletes the event specified via the Event ID. (can be found in footer of event embed)*",
-            inline=False
-        )
-        givembed.add_field(
-            name=f"{prefix}eventforce",
-            value= "*Forces the bot to end the event and choose a winner.*",
-            inline=False
-        )
-        loggembed = discord.Embed(
-            title= "Logging Configuration Commands",
-            description="Setup commands for setting the log channels. \n\n**REQUIRES:** Manage Server permissions to execute.",
-            color=3066993
-        )
-        loggembed.add_field(
-            name=f"{prefix}config msglogs <#channel>",
-            value="*Sets the mentioned channel as the message logs channel.*",
-            inline=False
-        )
-        loggembed.add_field(
-            name=f"{prefix}config modlogs <#channel>",
-            value="*Sets the mentioned channel as the moderation logs channel.*",
-            inline=False
-        )
-        loggembed.add_field(
-            name=f"{prefix}config welcomelogs <#channel>",
-            value= "*Sets the channel that welcome messages will be posted in.*",
-            inline=False
-        )
-        loggembed.add_field(
-            name=f"{prefix}config serverlogs <#channel>",
-            value="*Sets the channel that any audit logs will be sent to. i.e: role permissions updates, etc.*",
-            inline=False
-        )
-        loggembed.add_field(
-            name=f"{prefix}config tickets <category_name>",
-            value="*Sets the category the support ticket channels will be created under.*",
-            inline=False
-        )
-        featembed = discord.Embed(
-            title="Future Features and information",
-            description="We are constantly working on adding new features to UltiMod and fixing bugs that everyone has reported to us. Here is some fun and useful information about UltiMod for you.",
-            color=discord.Colour.gold()
-        )
-        featembed.add_field(
-            name="NEW Features Coming Soon!!",
-            value="-Auto-Mod system \n-Warnings System \n-Leveling System \n-Economy System (with customizable guild stores) \n-Modmail or ticket system \n-Reaction Roles system \n-Various games/trivia extensions server managers can turn on and off for their server!.",
-            inline=False
-        )
-        featembed.add_field(
-            name="Known Bugs and current working fixes.",
-            value="1. We are currently aware of issues where if a player uses the help command in two different guilds, the bot will change pages to both help messages in each guild no matter which is reacted to. We are currently working on a check system to prevent this from happening. \n\n 2. Verify System - We expect issues with the verified system not working after a bot outage. To mitigate this issue users will have to redo the command if the bot goes down. (unlikely) \n\n 3. whois command - Although we plan to update this command in the future, it currently does not allow look up for users not in your guid or mutual guild with the bot. \n\n 4. settings command - We are aware of the settings command bugging out when guild managers have not completely set up their guild's roles and log channels with UltiMod. This feature will be fixed in the very near future.",
-            inline=False
-        )
-        message = await ctx.send(f"Page: {curpage}/{totpage}", embed=hlpembed)
-        await message.add_reaction('🛠️')
-        await message.add_reaction('🛡️')
-        await message.add_reaction('🎁')
-        await message.add_reaction('📁')
-        await message.add_reaction('📨')
-        await message.add_reaction('❌')
-
-        def check(reaction, user):
-            return user == ctx.author and str(reaction.emoji) in ['❌', '📁', '🎁', '🛡️', '🛠️','📨']
-        while True:
-            try:
-                reaction, user = await self.bot.wait_for("reaction_add", timeout=60, check=check)
-                
-                if str(reaction.emoji) == '🛠️':
-                    curpage = 2
-                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=utilembed)
-                    await message.remove_reaction(reaction, user)
-                
-                elif str(reaction.emoji) == '🛡️':
-                    curpage = 3
-                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=modembed)
-                    await message.remove_reaction(reaction, user)
-
-                elif str(reaction.emoji) == '🎁':
-                    curpage = 4
-                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=givembed)
-                    await message.remove_reaction(reaction, user)
-                
-                elif str(reaction.emoji) == '📁':
-                    curpage = 5
-                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=loggembed)
-                    await message.remove_reaction(reaction, user)
-                
-                elif str(reaction.emoji) == '📨':
-                    curpage = 6
-                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=featembed)
-                    await message.remove_reaction(reaction, user)
-
-                elif str(reaction.emoji) == '❌':
-                    await message.delete()
-
-            except asyncio.TimeoutError:
-                await message.clear_reaction('❌')
-                await message.clear_reaction('📨')
-                await message.clear_reaction('📁')
-                await message.clear_reaction('🎁')
-                await message.clear_reaction('🛡️')
-                await message.clear_reaction('🛠️')
-                
-
+#    @commands.command()
+#    async def help(self, ctx):
+#        curpage = 1
+#        totpage = 6
+#        
+#        db = sqlite3.connect('ultidb.sqlite')
+#        cursor = db.cursor()
+#        cursor.execute("SELECT prefix FROM guild_config WHERE guild_id = ?", (ctx.guild.id,))
+#        results = cursor.fetchone()
+#        prefix = str(results[0][0])
+#
+#        hlpembed = discord.Embed(
+#            title= "UltiMod Help & Information.",
+#            description= "List of all command uses, and setup information. ",
+#            color=2123412
+#        )
+#        hlpembed.add_field(
+#            name= "How to use:",
+#            value= """React with the corresponding emoji to jump straight to the page you would like.
+#            
+#            ❌ - Close Help Menu
+#            __**Pages:**__
+#            🛠️ - Utility Commands Menu.
+#            🛡️ - Moderation Commands Menu.
+#            🎁 - Giveaway Commands Menu.
+#            📁 - Logs Configuration Commands.
+#            📨 - Future features and information.""",
+#            inline=False
+#        )
+#        utilembed = discord.Embed(
+#            title= "Utility Commands.",
+#            description= "current utility commands and their usages.",
+#            color=15844367
+#        )
+#        utilembed.add_field(
+#            name= f"{prefix}echo <#channel> <message>",
+#            value= "*Echo's the message as if from the bot.*. **Note:** *Channel is required. if you wish to post in the same channel just mention that channel.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name= f"{prefix}hello",
+#            value= "*Similar to 'ping' command on other bots. Bot responds with a unique message.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name= f"{prefix}botinfo",
+#            value= "*Displays Nerd infor for the bot. Current build, Code Language, shards and whether premium is active.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name= f"{prefix}channelid",
+#            value="*Fetches the ID for the server channel mentioned.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name=f"{prefix}whois",
+#            value="*Fetches information about the specified user. Currently supports only @mentions.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name=f"{prefix}avatar @user",
+#            value="*Fetches the avatar of the mentioned user and relays in an embed.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name=f"{prefix}channelstats or ?cs",
+#            value="*Fetches cool information about the channel. Such as, permissions, slowmode time, creation date, etc.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name=f"{prefix}roleadd @user <rolename>",
+#            value="*Adds the specified role to the mentioned user.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name=f"{prefix}roleremove @user <rolename>",
+#            value="*Removes the specified role from the mentioned user.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name=f"{prefix}support",
+#            value="*Gives you a link to join UltiMod's support server*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name=f"{prefix}inviteme",
+#            value="*Displays the authorization link to invite UltiMod to your server.*",
+#            inline=False
+#        )
+#        utilembed.add_field(
+#            name=f"{prefix}bug <message>",
+#            value="*Sends a bug report to the support server where developers can either contact you to help you work around a bug or get right into fixing it for you.*"
+#        )
+#        modembed = discord.Embed(
+#            title= "Moderation Commands",
+#            description= "Moderation commands an their uses.",
+#            color=15158332
+#        )
+#        modembed.add_field(
+#            name="Warning system coming soon",
+#            value="*The warning system will be released shortly, It takes an extensive amount of coding to do what we would like it to do. When released you can expect to see a users warnings, actions taken against them, number of times they have been warned by a specific moderator, all server warnings, as well as see which moderators are sending out the most warnings. *",
+#            inline=False
+#        )
+#        modembed.add_field(
+#            name=f"{prefix}mute @user <reason>",
+#            value="*Mutes the mentioned user and provides a reason.*",
+#            inline=False
+#        )
+#        modembed.add_field(
+#            name=f"{prefix}unmute @user [Opt: <reason>]",
+#            value= "*Unmutes the mentioned user, and provides the optional reason.*",
+#            inline=False
+#        )
+#        modembed.add_field(
+#            name=f"{prefix}kick @user <reason>",
+#            value="*Kicks the mentioned user and provides a reason*",
+#            inline=False
+#        )
+#        modembed.add_field(
+#            name=f"{prefix}invkick @user_ID",
+#            value="*Invites the kicked user.*",
+#            inline=False
+#        )
+#        modembed.add_field(
+#            name=f"{prefix}ban @user <reason>",
+#            value="*Bans the mentioned user and provides a reason.*",
+#            inline=False
+#            )
+#
+#        modembed.add_field(
+#            name=f"{prefix}unban <user_ID>",
+#            value="*Unbans the user mentioned.*",
+#            inline=False
+#        )
+#        givembed = discord.Embed(
+#            title= "Giveaway Commands",
+#            description="Giveaway commands and their uses.",
+#            color=10181046
+#        )
+#        givembed.add_field(
+#            name=f"{prefix}eventcreate <'event_name'> <'event prize'>",
+#            value="*Creates an event using the name and prize stated. Creates embed and add reaction for contestants to enter.*",
+#            inline=False
+#        )
+#        givembed.add_field(
+#            name=f"{prefix}eventdel <event_ID>",
+#            value="*Deletes the event specified via the Event ID. (can be found in footer of event embed)*",
+#            inline=False
+#        )
+#        givembed.add_field(
+#            name=f"{prefix}eventforce",
+#            value= "*Forces the bot to end the event and choose a winner.*",
+#            inline=False
+#        )
+#        loggembed = discord.Embed(
+#            title= "Logging Configuration Commands",
+#            description="Setup commands for setting the log channels. \n\n**REQUIRES:** Manage Server permissions to execute.",
+#            color=3066993
+#        )
+#        loggembed.add_field(
+#            name=f"{prefix}config msglogs <#channel>",
+#            value="*Sets the mentioned channel as the message logs channel.*",
+#            inline=False
+#        )
+#        loggembed.add_field(
+#            name=f"{prefix}config modlogs <#channel>",
+#            value="*Sets the mentioned channel as the moderation logs channel.*",
+#            inline=False
+#        )
+#        loggembed.add_field(
+#            name=f"{prefix}config welcomelogs <#channel>",
+#            value= "*Sets the channel that welcome messages will be posted in.*",
+#            inline=False
+#        )
+#        loggembed.add_field(
+#            name=f"{prefix}config serverlogs <#channel>",
+#            value="*Sets the channel that any audit logs will be sent to. i.e: role permissions updates, etc.*",
+#            inline=False
+#        )
+#        loggembed.add_field(
+#            name=f"{prefix}config tickets <category_name>",
+#            value="*Sets the category the support ticket channels will be created under.*",
+#            inline=False
+#        )
+#        featembed = discord.Embed(
+#            title="Future Features and information",
+#            description="We are constantly working on adding new features to UltiMod and fixing bugs that everyone has reported to us. Here is some fun and useful information about UltiMod for you.",
+#            color=discord.Colour.gold()
+#        )
+#        featembed.add_field(
+#            name="NEW Features Coming Soon!!",
+#            value="-Auto-Mod system \n-Warnings System \n-Leveling System \n-Economy System (with customizable guild stores) \n-Modmail or ticket system \n-Reaction Roles system \n-Various games/trivia extensions server managers can turn on and off for their server!.",
+#            inline=False
+#        )
+#        featembed.add_field(
+#            name="Known Bugs and current working fixes.",
+#            value="1. We are currently aware of issues where if a player uses the help command in two different guilds, the bot will change pages to both help messages in each guild no matter which is reacted to. We are currently working on a check system to prevent this from happening. \n\n 2. Verify System - We expect issues with the verified system not working after a bot outage. To mitigate this issue users will have to redo the command if the bot goes down. (unlikely) \n\n 3. whois command - Although we plan to update this command in the future, it currently does not allow look up for users not in your guid or mutual guild with the bot. \n\n 4. settings command - We are aware of the settings command bugging out when guild managers have not completely set up their guild's roles and log channels with UltiMod. This feature will be fixed in the very near future.",
+#            inline=False
+#        )
+#        message = await ctx.send(f"Page: {curpage}/{totpage}", embed=hlpembed)
+#        await message.add_reaction('🛠️')
+#        await message.add_reaction('🛡️')
+#        await message.add_reaction('🎁')
+#        await message.add_reaction('📁')
+#        await message.add_reaction('📨')
+#        await message.add_reaction('❌')
+#
+#        def check(reaction, user):
+#            return user == ctx.author and str(reaction.emoji) in ['❌', '📁', '🎁', '🛡️', '🛠️','📨']
+#        while True:
+#            try:
+#                reaction, user = await self.bot.wait_for("reaction_add", timeout=60, check=check)
+#                
+#                if str(reaction.emoji) == '🛠️':
+#                    curpage = 2
+#                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=utilembed)
+#                    await message.remove_reaction(reaction, user)
+#                
+#                elif str(reaction.emoji) == '🛡️':
+#                    curpage = 3
+#                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=modembed)
+#                    await message.remove_reaction(reaction, user)
+#
+#                elif str(reaction.emoji) == '🎁':
+#                    curpage = 4
+#                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=givembed)
+#                    await message.remove_reaction(reaction, user)
+#                
+#                elif str(reaction.emoji) == '📁':
+#                    curpage = 5
+#                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=loggembed)
+#                    await message.remove_reaction(reaction, user)
+#                
+#                elif str(reaction.emoji) == '📨':
+#                    curpage = 6
+#                    await message.edit(content=f"Page: {curpage}/{totpage}", embed=featembed)
+#                    await message.remove_reaction(reaction, user)
+#
+#                elif str(reaction.emoji) == '❌':
+#                    await message.delete()
+#
+#            except asyncio.TimeoutError:
+#                await message.clear_reaction('❌')
+#                await message.clear_reaction('📨')
+#                await message.clear_reaction('📁')
+#                await message.clear_reaction('🎁')
+#                await message.clear_reaction('🛡️')
+#                await message.clear_reaction('🛠️')
+#                
+#
     ### CLASS: Utility commands ###
     #-----------------------------#
 
